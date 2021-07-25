@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Shopping Cart</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <section>
+        <div class="container" id="con">
+            <div class="cart" id="cart">
+                <div class="col-md-12 col-lg-10 mx-auto">
+                    <div class="cart-item">
+                        <div class="row">
+                            <div class="col-md-7 center-item">
+                                <img src="images/product-1.png" alt="">
+                                <h5>iPhone 11 128GB Black</h5>
+                            </div>
+
+                            <div class="col-md-5 center-item">
+                                <div class="input-group number-spinner">
+                                    <button onclick="productUpdate(false,'mobile')" class="btn btn-default"><i
+                                            class="fas fa-minus"></i></button>
+                                    <input type="text" class="form-control text-center" id="mobile-quantity" value="1">
+                                    <button onclick="productUpdate(true,'mobile')" class="btn btn-default"><i
+                                            class="fas fa-plus"></i></button>
+                                </div>
+                                <h5>$<span id="mobile-price">1219</span></h5>
+                                <img src="images/remove.png" alt="" class="remove-item">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cart-item">
+                        <div class="row">
+                            <div class="col-md-7 center-item mx-auto">
+                                <img src="images/product-2.png" alt="">
+                                <h5>iPhone 11 Silicone Case - Black</h5>
+                            </div>
+                            <div class="col-md-5 center-item">
+                                <div class="input-group number-spinner">
+                                    <button onclick="productUpdate(false,'case')" class="btn btn-default"><i
+                                            class="fas fa-minus"></i></button>
+                                    <input type="text" class="form-control text-center" id="case-quantity" value="1">
+                                    <button onclick="productUpdate(true,'case')" class="btn btn-default"><i
+                                            class="fas fa-plus"></i></button>
+
+                                </div>
+                                <h5>$<span id="case-price">59</span></h5>
+                                <img src="images/remove.png" alt="" class="remove-item">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cart-item">
+                        <div class="row">
+
+                            <div class="col-md-8">
+                                <h5>Subtotal: </h5>
+                                <h5>Tax:</h5>
+                                <h5>Total:</h5>
+                            </div>
+
+                            <div class="col-md-4 status">
+                                <h5>$<span id="subtotal">1278</span></h5>
+                                <!--Subtotal area-->
+                                <h5>$<span id="tax">0</span></h5>
+                                <h5>$<span id="total">1278</span></h5>
+                                <!--Total area-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 pt-4 pb-4">
+                        <button onclick="alert('Submitted successfully.We will confirm you in a short time')"
+                            type="button" class="btn btn-success check-out">Check Out</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+
+        function productUpdate(condition, product) {
+            const mobileQuantity = document.getElementById(product + '-quantity').value;
+            const quantityParsing = parseFloat(mobileQuantity);
+            let quantity = 0;
+            let price = 0;
+            if (condition === true) {
+                quantity = quantityParsing + 1;
+            }
+            if (condition === false && quantityParsing > 0) {
+                quantity = quantityParsing - 1;
+            }
+            if (product == "mobile") {
+                price = quantity * 1219;
+            }
+            if (product === "case") {
+                price = quantity * 59;
+            }
+            document.getElementById(product + "-quantity").value = quantity;
+            document.getElementById(product + "-price").innerText = price;
+            getTotal();
+        }
+        function parsing(id) {
+            const productId = document.getElementById(id).value;
+            const idParsing = parseFloat(productId);
+            return idParsing;
+        }
+        function getTotal() {
+            const mobileQty = parsing("mobile-quantity");
+            const casingQty = parsing("case-quantity");
+            const subtotal = mobileQty * 1219 + casingQty * 59;
+            const tax = Math.floor(subtotal * 0.1);
+            const total = subtotal + tax;
+            document.getElementById('total').innerText = total;
+            document.getElementById("tax").innerText = tax;
+            document.getElementById('subtotal').innerText = subtotal;
+        }
+
+
+    </script>
